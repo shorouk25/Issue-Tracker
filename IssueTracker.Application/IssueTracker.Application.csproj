@@ -7,8 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Features\Issues\Queries\" />
     <Folder Include="Features\Projects\" />
   </ItemGroup>
 

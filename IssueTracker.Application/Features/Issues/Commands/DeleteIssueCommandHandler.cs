@@ -19,7 +19,7 @@ namespace IssueTracker.Application.Features.Issues.Commands
 
         public async Task<Unit> Handle(DeleteIssueCommand request, CancellationToken cancellationToken)
         {
-            await _issueRepository.DeleteAsync(request.Id);
+            await _issueRepository.DeleteIssueAsync(request.Id);
             return Unit.Value;
         }
     }

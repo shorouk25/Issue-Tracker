@@ -13,9 +13,9 @@ namespace IssueTracker.Domain.Models
         public Priority? Priority { get; set; }
         public Category? Category { get; set; }
         public User Reporter { get; set; }
-        public int? AssigneId { get; set; }
+        public int? AssigneeId { get; set; }
         public User? Assignee { get; set; }
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
         public Project Project { get; set; }
         public List<Comment> Comments { get; set; } = new List<Comment>();
         public List<Attachment> Attachments { get; set; } = new List<Attachment>();

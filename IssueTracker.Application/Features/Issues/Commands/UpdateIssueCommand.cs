@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using IssueTracker.Domain.Enums;
-using IssueTracker.Domain.Models;
 using MediatR;
 
 namespace IssueTracker.Application.Features.Issues.Commands
@@ -17,7 +13,7 @@ namespace IssueTracker.Application.Features.Issues.Commands
         public string? Description { get; set; }
         public Priority? Priority { get; set; }
         public Category? Category { get; set; }
-        public int? AssigneId { get; set; }
+        public int? AssigneeId { get; set; }
         public int? ProjectId { get; set; }
     }
 }

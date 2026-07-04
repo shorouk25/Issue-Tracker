@@ -39,7 +39,7 @@ namespace IssueTracker.Application.Features.Issues.Commands
                 ProjectId = request.ProjectId,
             };
 
-            await _issueRepository.AddAsync(newIssue);
+            await _issueRepository.AddIssueAsync(newIssue);
             return newIssue.Id;
         }
     }

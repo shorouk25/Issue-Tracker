@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IssueTracker.Application.Interfaces;
+﻿using IssueTracker.Application.Interfaces;
 using MediatR;
 
 namespace IssueTracker.Application.Features.Issues.Commands
@@ -32,18 +27,18 @@ namespace IssueTracker.Application.Features.Issues.Commands
                 existingIssue.Description = request.Description;
 
             if(request.Priority.HasValue)
-                existingIssue.Priority = request.Priority.Value;
+                existingIssue.Priority = request.Priority;
 
             if(request.Category.HasValue)
-                existingIssue.Category = request.Category.Value;
+                existingIssue.Category = request.Category;
 
-            if(request.AssigneId.HasValue)
-                existingIssue.AssigneId = request.AssigneId.Value;
+            if(request.AssigneeId.HasValue)
+                existingIssue.AssigneeId = request.AssigneeId;
 
             if(request.ProjectId.HasValue)
-                existingIssue.ProjectId = request.ProjectId.Value;
+                existingIssue.ProjectId = request.ProjectId;
 
-            await _issueRepository.UpdateAsync(existingIssue);
+            await _issueRepository.UpdateIssueAsync(existingIssue);
             return Unit.Value;
         }
     }
