@@ -12,8 +12,9 @@ namespace IssueTracker.Domain.Models
         public Status Status { get; set; }
         public Priority? Priority { get; set; }
         public Category? Category { get; set; }
+        public string ReporterId { get; set; }
         public User Reporter { get; set; }
-        public int? AssigneeId { get; set; }
+        public string? AssigneeId { get; set; }
         public User? Assignee { get; set; }
         public int? ProjectId { get; set; }
         public Project? Project { get; set; }

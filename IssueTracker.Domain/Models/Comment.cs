@@ -10,7 +10,9 @@ namespace IssueTracker.Domain.Models
     {
         public int Id { get; set; }
         public string Content { get; set; }
+        public string AuthorId { get; set; }
         public User Author { get; set; }
+        public int IssueId { get; set; }
         public Issue Issue { get; set; }
         public DateTime CreatedAt { get; set; }
     }

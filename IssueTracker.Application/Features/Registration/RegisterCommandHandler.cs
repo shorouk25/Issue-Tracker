@@ -15,20 +15,19 @@ namespace IssueTracker.Application.Features.Registration
 
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var existingUser = await _userRepository.GetUserByEmailAsync(request.Email);
-            if(existingUser != null)
+            var isEmailRegistered = await _userRepository.IsEmailRegisteredAsync(request.Email);
+            if(isEmailRegistered)
             {
                 throw new Exception("This email is already registered.");
             }
 
-            var user = new User
+            var user = new Domain.Models.User
             {
+                Id = Guid.NewGuid().ToString(),
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                Department = request.Department,
-                Company = request.Company,
                 Role = request.Role
             };
             await _userRepository.AddUserAsync(user);

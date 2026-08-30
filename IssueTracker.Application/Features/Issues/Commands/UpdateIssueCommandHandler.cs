@@ -32,7 +32,7 @@ namespace IssueTracker.Application.Features.Issues.Commands
             if(request.Category.HasValue)
                 existingIssue.Category = request.Category;
 
-            if(request.AssigneeId.HasValue)
+            if(!string.IsNullOrWhiteSpace(request.AssigneeId))
                 existingIssue.AssigneeId = request.AssigneeId;
 
             if(request.ProjectId.HasValue)

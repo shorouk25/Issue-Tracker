@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IssueTracker.Domain.Enums;
-
+﻿using IssueTracker.Domain.Enums;
 namespace IssueTracker.Domain.Models
 {
     public class User
@@ -15,7 +9,9 @@ namespace IssueTracker.Domain.Models
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public Department? Department { get; set; }
+        public int? DepartmentId { get; set; }
         public Company? Company { get; set; }
+        public int? CompanyId { get; set; }
         public Role Role { get; set; }
         public List<Project> Projects { get; set; } = new List<Project>();
         public List<Issue> ReportedIssues { get; set; } = new List<Issue>();

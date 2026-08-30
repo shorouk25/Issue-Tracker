@@ -13,7 +13,7 @@ namespace IssueTracker.Application.Features.Issues.Commands
         public string? Description { get; set; }
         public Priority? Priority { get; set; }
         public Category? Category { get; set; }
-        public int? AssigneeId { get; set; }
+        public string? AssigneeId { get; set; }
         public int? ProjectId { get; set; }
     }
 }

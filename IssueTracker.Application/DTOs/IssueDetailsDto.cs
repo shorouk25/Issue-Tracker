@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IssueTracker.Domain.Enums;
+﻿using IssueTracker.Domain.Enums;
 using IssueTracker.Domain.Models;
 
 namespace IssueTracker.Application.DTOs
@@ -18,7 +13,7 @@ namespace IssueTracker.Application.DTOs
         public Status Status { get; set; }
         public Priority Priority { get; set; }
         public Category Category { get; set; }
-        public int? AssigneeId { get; set; }
+        public string? AssigneeId { get; set; }
         public int? ProjectId { get; set; }
         public List<Comment> Comments { get; set; }
         public List<Attachment> Attachments { get; set; }

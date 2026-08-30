@@ -11,7 +11,8 @@ namespace IssueTracker.Application.Features.Issues.Commands
         public string? Description { get; set; }
         public Priority? Priority { get; set; }
         public Category? Category { get; set; }
-        public User? Assignee { get; set; }
-        public int ProjectId { get; set; }
+        public string? AssigneeId { get; set; }
+        public int? ProjectId { get; set; }
+        public string ReporterId { get; set; }
     }
 }

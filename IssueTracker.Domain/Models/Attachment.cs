@@ -11,6 +11,8 @@ namespace IssueTracker.Domain.Models
         public int Id { get; set; }
         public string FileName { get; set; }
         public string FilePath { get; set; }
+        public DateOnly UploadedAt { get; set; }
         public Issue Issue { get; set; }
+        public int IssueId { get; set; }
     }
 }

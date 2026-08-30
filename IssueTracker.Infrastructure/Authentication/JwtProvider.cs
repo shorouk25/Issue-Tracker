@@ -24,7 +24,7 @@ namespace IssueTracker.Infrastructure.Authentication
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, userId),
+                    new Claim(ClaimTypes.NameIdentifier, userId),
                     new Claim(ClaimTypes.Email, email),
                     new Claim(ClaimTypes.Role, role.ToString())
                 }),

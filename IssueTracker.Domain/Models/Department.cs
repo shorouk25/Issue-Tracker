@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IssueTracker.Domain.Models
+﻿namespace IssueTracker.Domain.Models
 {
     public class Department
     {
@@ -12,6 +6,7 @@ namespace IssueTracker.Domain.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public Company Company { get; set; }
+        public int CompanyId { get; set; }
         public List<User> Users { get; set; } = new List<User>();
     }
 }

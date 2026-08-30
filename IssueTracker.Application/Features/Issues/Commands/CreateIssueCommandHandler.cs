@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IssueTracker.Application.Interfaces;
+﻿using IssueTracker.Application.Interfaces;
 using IssueTracker.Domain.Enums;
 using IssueTracker.Domain.Models;
 using MediatR;
@@ -23,9 +18,12 @@ namespace IssueTracker.Application.Features.Issues.Commands
 
         public async Task<int> Handle(CreateIssueCommand request, CancellationToken cancellationToken)
         {
-            var project = await _projectRepository.GetProjectByIdAsync(request.ProjectId);
-            if (project == null)
-                throw new Exception("Project not found");
+            if(request.ProjectId.HasValue)
+            {
+                var project = await _projectRepository.GetProjectByIdAsync(request.ProjectId.Value);
+                if (project == null)
+                    throw new Exception("Project not found");
+            }
 
             var newIssue = new Issue
             {
@@ -35,8 +33,9 @@ namespace IssueTracker.Application.Features.Issues.Commands
                 Status = Status.Open,
                 Priority = request.Priority,
                 Category = request.Category,
-                Assignee = request.Assignee,
+                AssigneeId = request.AssigneeId,
                 ProjectId = request.ProjectId,
+                ReporterId = request.ReporterId,
             };
 
             await _issueRepository.AddIssueAsync(newIssue);
