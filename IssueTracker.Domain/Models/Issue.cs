@@ -10,7 +10,7 @@ namespace IssueTracker.Domain.Models
         public string? Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.MinValue;
         public Status Status { get; set; }
-        public Priority? Priority { get; set; }
+        public Priority Priority { get; set; }
         public Category? Category { get; set; }
         public string ReporterId { get; set; }
         public User Reporter { get; set; }

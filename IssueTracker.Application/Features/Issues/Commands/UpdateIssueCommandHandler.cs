@@ -1,4 +1,5 @@
 ﻿using IssueTracker.Application.Interfaces;
+using IssueTracker.Domain.Enums;
 using MediatR;
 
 namespace IssueTracker.Application.Features.Issues.Commands
@@ -19,23 +20,17 @@ namespace IssueTracker.Application.Features.Issues.Commands
 
             if(request.Name != null)
                 existingIssue.Name = request.Name;
-
             if(request.Summary != null)
                 existingIssue.Summary = request.Summary;
-
             if(request.Description != null)
                 existingIssue.Description = request.Description;
-
             if(request.Priority.HasValue)
-                existingIssue.Priority = request.Priority;
-
-            if(request.Category.HasValue)
+                existingIssue.Priority = request.Priority.Value;
+            if(request.Category != null)
                 existingIssue.Category = request.Category;
-
-            if(!string.IsNullOrWhiteSpace(request.AssigneeId))
+            if(request.AssigneeId != null)
                 existingIssue.AssigneeId = request.AssigneeId;
-
-            if(request.ProjectId.HasValue)
+            if(request.ProjectId != null)
                 existingIssue.ProjectId = request.ProjectId;
 
             await _issueRepository.UpdateIssueAsync(existingIssue);

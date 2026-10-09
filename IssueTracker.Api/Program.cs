@@ -8,6 +8,7 @@ using IssueTracker.Infrastructure.Authentication;
 using IssueTracker.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using IssueTracker.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace IssueTracker.Api
 {
     public class Program
@@ -25,14 +26,15 @@ namespace IssueTracker.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddMediatR(typeof(IssueTracker.Application.Features.Registration.RegisterCommand).Assembly);
+            builder.Services.AddMediatR(typeof(Application.Features.Registration.RegisterCommand).Assembly);
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-            var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>();
-            builder.Services.AddSingleton(jwtOptions);
-            builder.Services.AddAuthentication().AddJwtBearer(options =>
+     
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+            var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>()!;
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters

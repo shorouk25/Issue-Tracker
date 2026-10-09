@@ -1,6 +1,7 @@
 ﻿using IssueTracker.Application.Interfaces;
 using IssueTracker.Domain.Models;
 using IssueTracker.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace IssueTracker.Infrastructure.Repositories
 {
@@ -13,23 +14,43 @@ namespace IssueTracker.Infrastructure.Repositories
         }
         public async Task<int> AddIssueAsync(Issue issue)
         {
-            if(issue == null)
-            {
-                throw new ArgumentNullException(nameof(issue));
-            }
+            ArgumentNullException.ThrowIfNull(issue);
             _context.Issues.Add(issue);
             await _context.SaveChangesAsync();
             return issue.Id;
         }
-        public Task DeleteIssueAsync(int issueId)
+        public async Task DeleteIssueAsync(Issue issue)
         {
-            throw new NotImplementedException();
+            _context.Issues.Remove(issue);
+            await _context.SaveChangesAsync();
         }
-        public Task<List<Domain.Models.Issue>> GetAllIssuesAsync()
+        public async Task<List<Issue>> GetAllIssuesAsync()
         {
-            throw new NotImplementedException();
+            var result = await _context.Issues.ToListAsync();
+            return result;
         }
-        public Task<Domain.Models.Issue> GetIssueByIdAsync(int issueId)
+        public async Task<Issue?> GetIssueByIdAsync(int issueId)
+        {
+            var issue = await _context.Issues
+                .Include(i => i.Labels)
+                .FirstOrDefaultAsync(i => i.Id == issueId);
+            return issue;
+        }
+        public async Task<List<Issue>> GetIssuesByAssigneeAsync(string assigneeId)
+        {
+            if(string.IsNullOrEmpty(assigneeId))
+            {
+                throw new ArgumentNullException(nameof(assigneeId));
+            }
+
+            var issues = await _context.Issues.
+                Where(i => i.AssigneeId == assigneeId).
+                OrderByDescending(i => i.CreatedAt).
+                ToListAsync();
+            return issues;
+        }
+
+        public async Task<List<Issue>> GetIssuesByReporterAsync(string reporterId)
         {
             throw new NotImplementedException();
         }
@@ -46,6 +67,10 @@ namespace IssueTracker.Infrastructure.Repositories
             throw new NotImplementedException();
         }
         public Task UpdateAssigneeAsync(int issueId, string assigneeId)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<List<Issue>> GetIssuesByProjectAsync(int projectId)
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,6 @@
-﻿using IssueTracker.Domain.Enums;
-using IssueTracker.Application.DTOs;
+﻿using IssueTracker.Application.DTOs;
 using IssueTracker.Application.Interfaces;
+using IssueTracker.Domain.Models;
 using MediatR;
 
 namespace IssueTracker.Application.Features.Issues.Queries
@@ -15,6 +15,11 @@ namespace IssueTracker.Application.Features.Issues.Queries
 
         public async Task<IssueDetailsDto> Handle(GetIssueByIdQuery request, CancellationToken cancellationToken)
         {
+
+            if (request.Id <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(request.Id));
+            }
             var issue = await _issueRepository.GetIssueByIdAsync(request.Id);
 
             if (issue == null)
@@ -28,7 +33,7 @@ namespace IssueTracker.Application.Features.Issues.Queries
                 Description = issue.Description,
                 CreatedDate = issue.CreatedAt,
                 Status = issue.Status,
-                Priority = issue.Priority.Value,
+                Priority = issue.Priority,
                 Category = issue.Category.Value,
                 AssigneeId = issue.AssigneeId,
                 ProjectId = issue.ProjectId,

@@ -28,8 +28,9 @@ namespace IssueTracker.Application.Features.Issues.Queries
             {
                 Id = issue.Id,
                 Name = issue.Name,
-                Summary = issue.Summary,
                 ProjectId = issue.ProjectId,
+                Status = issue.Status,
+                Priority = issue.Priority
             }).ToList();
 
             return issueDtos;

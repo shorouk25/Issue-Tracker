@@ -4,7 +4,7 @@ using IssueTracker.Domain.Models;
 namespace IssueTracker.Application.DTOs
 {
     public class IssueDetailsDto
-    {
+    {//it displays all details when you click on a specific issue in the issue list
         public int Id { get; set; }
         public string Name { get; set; }
         public string Summary { get; set; }
