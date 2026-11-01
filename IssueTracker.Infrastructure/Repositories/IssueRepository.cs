@@ -30,9 +30,18 @@ namespace IssueTracker.Infrastructure.Repositories
             return result;
         }
         public async Task<Issue?> GetIssueByIdAsync(int issueId)
-        {
+        { //display issue on the issue list page and for deleting the issue
             var issue = await _context.Issues
+                .FirstOrDefaultAsync(i => i.Id == issueId);
+            return issue;
+        }
+        public async Task<Issue?> GetIssueDetailsByIdAsync(int issueId)
+        { //Get issue details to display on the issue details page and for editing the issue's info
+            var issue = await _context.Issues
+                .Include(i => i.Assignee)
+                .Include(i => i.Reporter)
                 .Include(i => i.Labels)
+                .Include(i => i.Comments)
                 .FirstOrDefaultAsync(i => i.Id == issueId);
             return issue;
         }
@@ -44,6 +53,8 @@ namespace IssueTracker.Infrastructure.Repositories
             }
 
             var issues = await _context.Issues.
+                Include(i => i.Project).
+                Include(i => i.Reporter).
                 Where(i => i.AssigneeId == assigneeId).
                 OrderByDescending(i => i.CreatedAt).
                 ToListAsync();
@@ -52,27 +63,38 @@ namespace IssueTracker.Infrastructure.Repositories
 
         public async Task<List<Issue>> GetIssuesByReporterAsync(string reporterId)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(reporterId))
+                throw new ArgumentNullException(nameof(reporterId));
+            
+            var issues = await _context.Issues.
+                Include(i => i.Project).
+                Where(i => i.ReporterId == reporterId).
+                OrderByDescending(i => i.CreatedAt).
+                ToListAsync();
+            return issues;
         }
-        public Task<List<Domain.Models.Issue>> SearchIssueByNameAsync(string name)
+        public async Task<List<Issue>> SearchIssueByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentNullException(nameof(name));
+            var existedIssues = await _context.Issues.Where(i => i.Name.Contains(name)).ToListAsync();
+            return existedIssues;
         }
-        public Task UpdateIssueAsync(Domain.Models.Issue issue)
+        public async Task UpdateIssueAsync(Issue issue)
         {
-            throw new NotImplementedException();
-        }
-        public Task UpdateStatusAsync(int issueId, Status status)
-        {
-            throw new NotImplementedException();
-        }
-        public Task UpdateAssigneeAsync(int issueId, string assigneeId)
-        {
-            throw new NotImplementedException();
+            ArgumentNullException.ThrowIfNull(issue);
+            _context.Issues.Update(issue);
+            await _context.SaveChangesAsync();
         }
         public async Task<List<Issue>> GetIssuesByProjectAsync(int projectId)
         {
-            throw new NotImplementedException();
+            var issues = await _context.Issues.
+                Include(i => i.Project).
+                Include(i => i.Reporter).
+                Where(i => i.ProjectId == projectId).
+                OrderByDescending(i => i.CreatedAt).
+                ToListAsync();
+            return issues;
         }
     }
 }

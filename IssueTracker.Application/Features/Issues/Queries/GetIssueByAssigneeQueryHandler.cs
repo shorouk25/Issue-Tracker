@@ -22,7 +22,7 @@ namespace IssueTracker.Application.Features.Issues.Queries
                 ProjectName = issue.Project != null ? issue.Project.Name : "No Project",
                 Status = issue.Status,
                 Priority = issue.Priority,
-                ReporterName = issue.Reporter.FirstName + " " + issue.Reporter.LastName,
+                ReporterName = issue.Reporter != null ? issue.Reporter.FirstName + " " + issue.Reporter.LastName : "No Reporter",
                 ProjectId = issue.ProjectId,
                 ReporterId = issue.ReporterId
             }).ToList();

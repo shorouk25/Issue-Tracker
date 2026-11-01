@@ -1,5 +1,4 @@
 ﻿using IssueTracker.Domain.Enums;
-using IssueTracker.Domain.Models;
 
 namespace IssueTracker.Application.DTOs
 {//it displays the issue details in a simplified way in the UI

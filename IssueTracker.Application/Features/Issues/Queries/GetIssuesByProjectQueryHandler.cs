@@ -11,6 +11,7 @@ namespace IssueTracker.Application.Features.Issues.Queries
         {
             _issueRepository = issueRepository;
         }
+        //display all issues related to a specific project in page of the application
         public async Task<List<IssueDto>> Handle(GetIssuesByProjectQuery request, CancellationToken cancellationToken)
         {
             var issues = await _issueRepository.GetIssuesByProjectAsync(request.ProjectId);
@@ -19,7 +20,7 @@ namespace IssueTracker.Application.Features.Issues.Queries
                 Id = issue.Id,
                 Name = issue.Name,
                 ProjectId = issue.ProjectId,
-                ProjectName = issue.Project?.Name,
+                ProjectName = issue.Project != null ? issue.Project.Name : "No Project",
                 ReporterId = issue.ReporterId,
                 ReporterName = issue.Reporter.FirstName + " " + issue.Reporter.LastName,
                 Status = issue.Status,

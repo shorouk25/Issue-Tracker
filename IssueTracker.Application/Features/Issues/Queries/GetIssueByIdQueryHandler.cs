@@ -20,7 +20,7 @@ namespace IssueTracker.Application.Features.Issues.Queries
             {
                 throw new ArgumentOutOfRangeException(nameof(request.Id));
             }
-            var issue = await _issueRepository.GetIssueByIdAsync(request.Id);
+            var issue = await _issueRepository.GetIssueDetailsByIdAsync(request.Id);
 
             if (issue == null)
                 throw new Exception("Issue not found");

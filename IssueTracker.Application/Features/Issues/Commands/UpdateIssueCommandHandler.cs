@@ -28,7 +28,9 @@ namespace IssueTracker.Application.Features.Issues.Commands
                 existingIssue.Priority = request.Priority.Value;
             if(request.Category != null)
                 existingIssue.Category = request.Category;
-            if(request.AssigneeId != null)
+            if(request.Status.HasValue)
+                existingIssue.Status = request.Status.Value;
+            if (request.AssigneeId != null)
                 existingIssue.AssigneeId = request.AssigneeId;
             if(request.ProjectId != null)
                 existingIssue.ProjectId = request.ProjectId;

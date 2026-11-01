@@ -14,8 +14,6 @@ namespace IssueTracker.Infrastructure
         public DbSet<Issue> Issues { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Company> Companies { get; set; }
-        public DbSet<Department> Departments { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Label> Labels { get; set; }
@@ -43,20 +41,6 @@ namespace IssueTracker.Infrastructure
             });
 
             modelBuilder.Entity<Project>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(250);
-                entity.Property(e => e.Description).HasMaxLength(1000);
-            });
-
-            modelBuilder.Entity<Company>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(250);
-                entity.Property(e => e.Description).HasMaxLength(1000);
-            });
-
-            modelBuilder.Entity<Department>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(250);
@@ -101,30 +85,6 @@ namespace IssueTracker.Infrastructure
             .WithMany(p => p.Issues)
             .HasForeignKey(i => i.ProjectId)
             .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Company)
-                .WithMany(c => c.Users)
-                .HasForeignKey(u => u.CompanyId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Department)
-                .WithMany(d => d.Users)
-                .HasForeignKey(u => u.DepartmentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Department>()
-                .HasOne(d => d.Company)
-                .WithMany()
-                .HasForeignKey(d => d.CompanyId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Project>()
-                .HasOne(p => p.Company)
-                .WithMany(c => c.Projects)
-                .HasForeignKey(p => p.CompanyId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Project>()
                 .HasMany(p => p.Users)

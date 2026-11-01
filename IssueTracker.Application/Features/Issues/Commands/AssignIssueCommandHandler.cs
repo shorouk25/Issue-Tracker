@@ -17,7 +17,7 @@ namespace IssueTracker.Application.Features.Issues.Commands
             if (existingIssue == null)
                 throw new Exception("Issue not found");
             existingIssue.AssigneeId = request.AssigneeId;
-            await _issueRepository.UpdateAssigneeAsync(existingIssue.Id, existingIssue.AssigneeId);
+            await _issueRepository.UpdateIssueAsync(existingIssue);
             return existingIssue.Id;
         }
     }

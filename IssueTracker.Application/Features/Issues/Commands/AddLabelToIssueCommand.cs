@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace IssueTracker.Application.Features.Lables
+namespace IssueTracker.Application.Features.Issues.Commands
 {
     public class AddLabelToIssueCommand : IRequest
     {

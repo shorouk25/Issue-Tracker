@@ -1,4 +1,3 @@
-
 using System.Reflection;
 using MediatR;
 using System.Text;
@@ -22,6 +21,7 @@ namespace IssueTracker.Api
             builder.Services.AddScoped<IIssueRepository, IssueRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+            builder.Services.AddScoped<ILabelRepository, LabelRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -31,7 +31,7 @@ namespace IssueTracker.Api
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-     
+
             builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
             var jwtOptions = builder.Configuration.GetSection("Jwt").Get<JwtOptions>()!;
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>

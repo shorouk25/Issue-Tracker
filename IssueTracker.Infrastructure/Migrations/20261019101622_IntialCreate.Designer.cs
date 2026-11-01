@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueTracker.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260726175036_addingmissingrelationships")]
-    partial class addingmissingrelationships
+    [Migration("20261019101622_IntialCreate")]
+    partial class IntialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,57 +103,6 @@ namespace IssueTracker.Infrastructure.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("IssueTracker.Domain.Models.Company", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Companies");
-                });
-
-            modelBuilder.Entity("IssueTracker.Domain.Models.Department", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.ToTable("Departments");
-                });
-
             modelBuilder.Entity("IssueTracker.Domain.Models.Issue", b =>
                 {
                     b.Property<int>("Id")
@@ -180,7 +129,7 @@ namespace IssueTracker.Infrastructure.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int?>("Priority")
+                    b.Property<int>("Priority")
                         .HasColumnType("int");
 
                     b.Property<int?>("ProjectId")
@@ -233,9 +182,6 @@ namespace IssueTracker.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -248,8 +194,6 @@ namespace IssueTracker.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
-
                     b.ToTable("Projects");
                 });
 
@@ -257,12 +201,6 @@ namespace IssueTracker.Infrastructure.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -287,10 +225,6 @@ namespace IssueTracker.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Users");
                 });
@@ -355,17 +289,6 @@ namespace IssueTracker.Infrastructure.Migrations
                     b.Navigation("Issue");
                 });
 
-            modelBuilder.Entity("IssueTracker.Domain.Models.Department", b =>
-                {
-                    b.HasOne("IssueTracker.Domain.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("IssueTracker.Domain.Models.Issue", b =>
                 {
                     b.HasOne("IssueTracker.Domain.Models.User", "Assignee")
@@ -391,34 +314,6 @@ namespace IssueTracker.Infrastructure.Migrations
                     b.Navigation("Reporter");
                 });
 
-            modelBuilder.Entity("IssueTracker.Domain.Models.Project", b =>
-                {
-                    b.HasOne("IssueTracker.Domain.Models.Company", "Company")
-                        .WithMany("Projects")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
-            modelBuilder.Entity("IssueTracker.Domain.Models.User", b =>
-                {
-                    b.HasOne("IssueTracker.Domain.Models.Company", "Company")
-                        .WithMany("Users")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("IssueTracker.Domain.Models.Department", "Department")
-                        .WithMany("Users")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Company");
-
-                    b.Navigation("Department");
-                });
-
             modelBuilder.Entity("ProjectUser", b =>
                 {
                     b.HasOne("IssueTracker.Domain.Models.Project", null)
@@ -432,18 +327,6 @@ namespace IssueTracker.Infrastructure.Migrations
                         .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("IssueTracker.Domain.Models.Company", b =>
-                {
-                    b.Navigation("Projects");
-
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("IssueTracker.Domain.Models.Department", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("IssueTracker.Domain.Models.Issue", b =>

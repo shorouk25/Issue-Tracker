@@ -20,6 +20,8 @@ namespace IssueTracker.Application.Features.Issues.Queries
                 Name = issue.Name,
                 Status = issue.Status,
                 Priority = issue.Priority,
+                ReporterId = issue.ReporterId,
+                ReporterName = issue.Reporter != null ? issue.Reporter.FirstName + " " + issue.Reporter.LastName : "No Reporter",
                 ProjectId = issue.ProjectId,
                 ProjectName = issue.Project != null ? issue.Project.Name : "No Project"
             }).ToList();

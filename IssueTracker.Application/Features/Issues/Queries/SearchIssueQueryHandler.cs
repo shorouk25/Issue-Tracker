@@ -25,7 +25,7 @@ namespace IssueTracker.Application.Features.Issues.Queries
                 return new List<IssueDto>(); //return empty list
 
             var issueDtos = existingIssues.Select(issue => new IssueDto
-            {
+            { //return same issuedto but with different shape
                 Id = issue.Id,
                 Name = issue.Name,
                 ProjectId = issue.ProjectId,

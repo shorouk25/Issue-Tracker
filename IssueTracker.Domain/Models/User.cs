@@ -8,10 +8,6 @@ namespace IssueTracker.Domain.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
-        public Department? Department { get; set; }
-        public int? DepartmentId { get; set; }
-        public Company? Company { get; set; }
-        public int? CompanyId { get; set; }
         public Role Role { get; set; }
         public List<Project> Projects { get; set; } = new List<Project>();
         public List<Issue> ReportedIssues { get; set; } = new List<Issue>();

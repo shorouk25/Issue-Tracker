@@ -17,7 +17,8 @@ namespace IssueTracker.Application.Features.Issues.Commands
             {
                 throw new Exception($"Issue with ID {request.Id} not found.");
             }
-            await _issueRepository.UpdateStatusAsync(issue.Id, request.Status);
+            issue.Status = request.Status;
+            await _issueRepository.UpdateIssueAsync(issue);
             return issue.Id;
         }
     }
